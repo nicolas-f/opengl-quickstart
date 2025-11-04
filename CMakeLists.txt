@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 project(OpenGLScene)
 
 # Options
@@ -20,7 +20,8 @@ link_directories(
 )
 
 # Find OpenGL
-find_library(OPENGL_LIBRARY OpenGL)
+find_package(OpenGL REQUIRED)
+find_package(glfw3 3.4 REQUIRED)
 
 # Silence OpenGL deprecation warnings on macOS
 add_definitions(-DGL_SILENCE_DEPRECATION)
@@ -34,9 +35,9 @@ file(GLOB_RECURSE SOURCE_FILES
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 # Link libraries
-target_link_libraries(${PROJECT_NAME} 
-    libglfw.3.dylib
-    ${OPENGL_LIBRARY}
+target_link_libraries(${PROJECT_NAME}
+    glfw
+    OpenGL::GL
 )
 
 # Installation
